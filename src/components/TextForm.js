@@ -6,15 +6,18 @@ export default function TextForm(props) {
 		// console.log(text)
 		// console.log(text.toUpperCase());
 		// console.log("You have Clicked on HandleUpperClick")
-		setText(text.toUpperCase());
 
 		// also can be written as
 		// let Uppercase = text.toUpperCase();
 		// setText(Uppercase)
+
+		setText(text.toUpperCase());
+		props.function("Input string of Word Converted to Upper-Case","success");
 	};
 
 	const HandleLowerClick = () => {
 		setText(text.toLowerCase());
+		props.function("Input string of Word Converted to Lower-Case","success");
 	};
 
 	const HandleTitleClick = () => {
@@ -33,6 +36,7 @@ export default function TextForm(props) {
 		let finalCase = toTitleCase(newtext);
 		//   console.log(finalCase)
 		setText(finalCase);
+		props.function("Input string of Word Converted to Title-Case","success");
 	};
 
 	const HandleSentenceClick = () => {
@@ -50,11 +54,13 @@ export default function TextForm(props) {
 		// console.log(finalCase);
 
 		setText(finalCase);
+		props.function("Input string of Word Converted to Sentence-Case","success");
 	};
 
 	const HandleClearClick = () => {
 		let newtext = "";
 		setText(newtext);
+		props.function("Input string is cleared from memory","success");
 	};
 
 	const HandleonChange = (event) => {
@@ -67,12 +73,14 @@ export default function TextForm(props) {
 		// let temp= document.getElementById("myBox")
 		// temp.select();									//I used the Simplest version of this function that is without fetching through getElementById I used directly the State Value which Carries the current Typed Text in the TextAreaBox
 		navigator.clipboard.writeText(text)
+		props.function("Input string is being copied to clipboard","success");
 	}
 
 
 	const HandleExtraSpaces =()=>{
 		let newText = text.split(/[ ]+/);
 		setText(newText.join(" "))
+		props.function("Removed extra spaces from your input string ","success");
 	}
 
 	const [text, setText] = useState("");
@@ -149,12 +157,12 @@ export default function TextForm(props) {
 				{/*<p>3432 words and 23412 characters</p>*/}
 
 				<p>
-					{text === " "
-						? text.split(/[.!\s_]+/).length
-						: text.split(/[.!\s_]+/).length - 1}{" "}
-					words and {text.length} characters
+					{ text === null ? text.split(/[.!\s_]+/).length : text.split(/[.!\s_]+/).length - 1} words and {text.length} characters
 				</p>
 				{/*I used reg ex for split method reg ex: starts with '/  /' then '[   ]' and contains . ! \s _ and + means 1 or more occurences.*/}
+				{/*I used ternary Operator because at First it used to assume the empty string as one word which is false so I used Ternary like
+					text === null if empty string meaning no word is still split in the text variable then count 
+				*/}
 
 				<p> </p>
 
@@ -164,7 +172,7 @@ export default function TextForm(props) {
 				</p>
 
 				<h3>Preview</h3>
-				<p>{text} </p>
+				<p>{text.length === 0 ? "Enter your text in the text box to preview here " : text } </p>
 			</div>
 		</div>
 	);

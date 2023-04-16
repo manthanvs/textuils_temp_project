@@ -4,15 +4,22 @@ import PropTypes from "prop-types";
 export default function Navbar(props) {
 	const myToggleTheme = () => {
 		var element = document.body;
+
+		if(element.dataset.bsTheme === undefined){
+			element.dataset.bsTheme = "light";
+		}
+
 		element.dataset.bsTheme =
 			element.dataset.bsTheme === "light" ? "dark" : "light";
 		if (element.dataset.bsTheme === "light") {
-			setBtnText("Dark Mode");
-		} else {
 			setBtnText("Light Mode");
+			props.function("Light Mode activated", "success");
+		} else {
+			setBtnText("Dark Mode");
+			props.function("Dark Mode activated", "success");
 		}
 	};
-	const [btnText, setBtnText] = useState("Dark mode");
+	const [btnText, setBtnText] = useState("Light mode");
 
 	return (
 		<div>
@@ -70,18 +77,20 @@ export default function Navbar(props) {
 						{/*Button for toggling the dark and light Mode */}
 						<form className="d-flex mx-2 my-2">
 							<div className="form-check form-switch">
-								<input
-									className="form-check-input"
-									type="checkbox"
-									role="switch"
-									id="flexSwitchCheckDefault"
-									onClick={myToggleTheme}
-								/>
-								<label
-									className="form-check-label"
-									htmlFor="flexSwitchCheckDefault">
-									{btnText}
-								</label>
+									<div className="form-check form-switch">
+									<input
+										className="form-check-input"
+										type="checkbox"
+										role="switch"
+										id="flexSwitchCheckChecked"
+										onClick={myToggleTheme}
+									/>
+									<label
+										className="form-check-label"
+										htmlFor="flexSwitchCheckChecked">
+										{btnText}
+									</label>
+								</div>
 							</div>
 						</form>
 					</div>
@@ -91,11 +100,14 @@ export default function Navbar(props) {
 	);
 }
 
+// These Are Props From Parent send to child
 Navbar.propTypes = {
 	title: PropTypes.string.isRequired,
+	// only PropTypes will fetch but if you want the props to be compulsory then put ".isRequired"
 	aboutText: PropTypes.string.isRequired,
 };
 
+// These are Default Props when No Props Are Send by Parent to child i.e. child will assume these are their props from parent when parent wiil go to bring milk.
 Navbar.defaultProps = {
 	title: "Set title Here",
 	aboutText: "Set Your About US information Here",
