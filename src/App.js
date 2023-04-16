@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import TextForm from "./components/TextForm";
 import React, { useState } from 'react';
 
-// import About from "./components/About";
+import About from "./components/About";
 
 
 // let name ="MS Vijay";
@@ -49,7 +49,7 @@ function App() {
 			<Alert alert={alert} />
 			<div className="container my-3">
 				<TextForm heading="Enter the Text To Analyse Below" function={showAlert}/>
-				{/*<About />*/}
+				<About />
 			</div>
 		</div>
 	);
